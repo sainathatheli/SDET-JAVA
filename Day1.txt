@@ -1,0 +1,613 @@
+class Welcome{
+    
+    public static void main(String arg[]){
+        System.out.println("welcome to java");
+    }
+}
+
+2)
+---
+// You are using Java
+class Chair{
+             //Chair object properties 
+             //instance variables
+    String color;
+    int size;
+    String shape;
+    String material;
+    //static variable
+    static int noOfWheels=4;
+    
+      ///chair object behaviours will represented in the form of methods
+    public void chairMoviable(){
+        System.out.println("Chair is movieable");
+        System.out.println(Chair.noOfWheels);
+    }
+
+   public static void noOfWheels(){
+       System.out.println("No of whees of chairs is : 4");
+   }
+
+   public void chairSeatAjustable(){
+       System.out.println("Chair seat heignt adjustable");
+   }
+   
+   public static void main(String args[]){
+       Chair chairObj = new Chair();
+       chairObj.chairMoviable();
+       chairObj.chairSeatAjustable();
+       
+       System.out.println(chairObj.color);
+       System.out.println(chairObj.size);
+       System.out.println(chairObj.shape);
+       System.out.println(chairObj.material);
+       System.out.println(Chair.noOfWheels);//calling a static variables
+       System.out.println(noOfWheels);//directly we can call in another static method
+       Chair.noOfWheels();
+       
+         chairObj.chairMoviable();
+       
+       
+   }
+    
+}
+
+3)
+class Employee{
+    
+    int empId;
+    String empName;
+    float  empSal;
+    
+    Employee(){
+        System.out.println("we are in default constructor");
+    }
+    
+    Employee(int empId,String empName,float empSal){
+        this.empId=empId;
+        this.empName=empName;
+        this.empSal=empSal;
+    }
+    
+    
+    
+    public static void main(String args[]){
+        Employee emp1 = new Employee(); //creating object for a class using 
+                                        //default constructor;
+        System.out.println("Using default constructor");
+        System.out.println(emp1.empId);
+        System.out.println(emp1.empName);
+        System.out.println(emp1.empSal);
+                                        
+        Employee emp2 = new Employee(1001,"smith",3000); //creating object for a class using  
+             System.out.println("Using parameterized constructor");
+        System.out.println(emp2.empId);
+        System.out.println(emp2.empName);
+        System.out.println(emp2.empSal);
+                                                                         //parameterized constructor;
+                                        
+    }
+}
+
+
+4)
+class Employee{
+    
+    int empId;
+    String empName;
+    float  empSal;
+    
+    Employee(){
+        this(1002,"Raju",5000); //calling parameterized constructor
+        System.out.println("we are in default constructor");
+         System.out.println(this.empId+" "+this.empName+" "+this.empSal);
+    }
+    
+    Employee(int empId,String empName,float empSal){
+       //this() ;//default constructor;
+        this.empId=empId;
+        this.empName=empName;
+        this.empSal=empSal;
+              // this();invalid
+    }
+    
+    
+    
+    public static void main(String args[]){
+       Employee emp1 = new Employee(); //creating object for a class using 
+                                        //default constructor;
+        System.out.println("Using default constructor");
+        System.out.println(emp1.empId);
+        System.out.println(emp1.empName);
+        System.out.println(emp1.empSal);
+                                        
+        /*Employee emp2 = new Employee(1001,"smith",3000); //creating object for a class using  
+             System.out.println("Using parameterized constructor");
+        System.out.println(emp2.empId);
+        System.out.println(emp2.empName);
+        System.out.println(emp2.empSal);
+                                          */                               //parameterized constructor;
+                                        
+    }
+}
+
+5)
+class Student{
+     int id;
+     String name;
+     
+     
+     Student(int id,String name){
+         this.id=id;
+         this.name=name;
+     }
+    
+     Student(Student s){ //copy constructor
+         this.id=s.id;
+         this.name=s.name;
+     }
+     
+     public void display(){
+         System.out.println(this.id+" "+this.name);
+     }
+    
+    public static void main(String args[]){
+      Student s1 = new Student(1001,"rahul");
+       s1.display();
+      
+      Student s2 = new Student(s1); //copy constructor
+      s2.display();
+        
+    }
+    
+}
+
+Encapsulation:
+--------------
+class Employee{
+    private int empId;
+    private String empName;
+    private float empSal;
+    
+    Employee(){
+     this.empId=0;
+     this.empName=null;
+     this.empSal=0.0f;
+    }
+    
+    Employee(int empId,String empName,float empSal){
+        this.empId=empId;
+        this.empName=empName;
+        this.empSal=empSal;
+    }
+    
+    //Setters and Getters;
+    public int getEmpId(){
+        return this.empId;
+    }
+
+    public void setEmpId(int empId){
+        this.empId=empId;
+    }
+    public String getEmpName(){
+        return this.empName;
+    }
+    public void setEmpName(String empName){
+        this.empName=empName;
+        
+    }
+    public float getEmpSal(){
+        return this.empSal;
+    }
+    
+    public void setEmpSal(float empSal){
+        this.empSal=empSal;
+    }
+}
+class Main{
+    
+    public static void main(String args[]){
+        
+    Employee empObj = new Employee(1001,"smith",3000);//Employee(int,String,float)
+    System.out.println(empObj.getEmpSal());
+    System.out.println(empObj.getEmpId());
+    System.out.println(empObj.getEmpName());
+    
+    Employee emp2 = new Employee();
+    emp2.setEmpId(1002); //initialization using setter methods
+    emp2.setEmpName("Rahul"); 
+    emp2.setEmpSal(5000);
+    
+     System.out.println(emp2.getEmpSal());
+    System.out.println(emp2.getEmpId());
+    System.out.println(emp2.getEmpName());
+    
+   
+}
+}
+
+Example(multi-level):
+----------------------
+
+Class A
+methodOne()
+
+Class B extends A
+methodTwo()
+
+class C extends B
+MethodThree()
+sol:
+---
+class A{
+    public void methodOne(){
+        System.out.println("we are in methodOne of A class(parent or super)");
+    }
+}
+
+class B extends A{ //single inheritance
+    public void methodTwo(){
+        System.out.println("we are in methodTwo of B class (child or sub class)");
+    }
+}
+
+class C extends B{ //single inheritance
+    public void methodThree(){
+        System.out.println("we are in methodTwo of C class (child or sub class)");
+    }
+    
+    public static void main(String args[]){
+         C coj = new C();
+        coj.methodOne();
+        coj.methodTwo();
+        coj.methodThree();
+    }
+}
+
+
+
+Example (hierarchical);
+------------------------
+
+Class A
+methodOne()
+
+Class B extends A
+methodTwo()
+
+class C extends A
+MethodThree()
+
+sol:
+----
+class A{
+    public void methodOne(){
+        System.out.println("we are in methodOne of A class(parent or super)");
+    }
+}
+class B extends A{ 
+    public void methodTwo(){
+        System.out.println("we are in methodTwo of B class (child or sub class)");
+    }
+}
+
+class C extends A{
+    public void methodThree(){
+        System.out.println("we are in methodTwo of C class (child or sub class)");
+    }
+class Main{
+
+public static void main(String args[]){
+            B boj = new  B();
+            boj.methodOne();
+	    boj.methodTwo();
+
+           C coj = new  C();
+             coj.methodOne();
+              coj.methodThree();
+
+}
+}
+
+Example(multiple):
+----------------------
+
+Class A
+methodOne()
+
+Class B 
+methodTwo()
+
+class C extends B,A
+MethodThree()
+
+Note:-
+
+java doesnot support multiple inheritanc, we can achieve indirectly by using interfaces (
+by implementing the interfaces)
+ 
+
+
+SuperKeyWord:
+-------------
+class Parent{
+     int a=100;
+     String name="raju";
+     
+     Parent(){
+         System.out.println("we are in default constructor of parent class")
+     }
+     
+     Parent(String name){
+         this.name=name;
+     }
+     
+     public void methdOne(){
+         System.out.println("we are in the Parent class");
+     }
+     
+     public void display(){
+         System.out.println("we are in display method of parent class");
+         System.out.println("name is : "+this.name);
+     }
+    
+}
+
+class Child extends Parent{
+     int a=20;
+     String addrs="CHEN";
+     
+     Child(){
+         super("JOHN");//Parent(String);
+         System.out.println("we are in default constructor of child class")
+     }
+     
+     public void methdTwo(){
+         System.out.println("we are in the Child class");
+     }
+     
+     public void display(){
+         System.out.println("we are in display method of Child class");
+         super.display();//parent class display
+         
+         System.out.println("a value from the parent class "+super.a);
+     }
+    
+    public static void main(String args[]){
+        Child cobj = new Child();
+        System.out.println(cobj.a);
+        cobj.display();
+        //System.out.println("a value from the parent class "+super.a);
+        
+    }
+    
+    
+}
+
+5)
+==
+// You are using Java
+class Calculation{
+    
+    public void add(int x){
+        System.out.println("the value of x is :"+x);
+    }
+
+   public int add(int a,int b){
+        return a+b;
+    }
+    
+    public void add(int x,int y,int z){
+        int c= x+y+z;
+        System.out.println("sum of three numbers is : "+c);
+    }
+
+   public double add(double a ,double b){
+       return a+b;
+   }
+   
+   public static void main(String args[]){
+        Calculation cobj = new Calculation();
+        int res =cobj.add(20,40);//add(int,int);
+        System.out.println("sum of two numbers is : "+res);
+        
+        double res2 =cobj.add(10.0,20.0);  //add(double,double);
+        System.out.println("sum of two numbers is using double : "+res2);
+        
+        cobj.add(10); //add(int);
+        
+        cobj.add('A');//add(char); //datatype autotype promotion (byte->int->long->float->double);
+                                   //(char->int->long->float->double);
+        
+   }
+}
+
+----
+overridding:
+------------
+class First{
+    
+   public void methodOne(){
+    System.out.println("we are in methodOne in First class");
+   }
+     public void display(){
+    System.out.println("we are in print in First class");
+   }
+}
+
+class Second extends First{
+    
+    @Override
+    public void methodOne(){
+      System.out.println("we are in methodOne in Second class overidding method" );
+    }
+    
+    public void methodTwo(){
+        System.out.println("we are in methodTwo in Second class");
+    }
+    
+    
+    public static void main(String args[]){
+        
+        Second sobj = new Second();
+        sobj.methodOne();
+        sobj.display();
+        
+        First fobj = new Second(); //polymorphism in java
+        fobj.methodOne();
+        fobj.display();
+        fobj.methodTwo();
+    }
+    
+}
+
+Interfaces:
+-----------
+interface MyApp{
+    public void methodOne();
+    public abstract int addition(int x,int y);
+}
+
+class MyAppImpl implements MyApp{
+    @Override
+    public void methodOne(){
+        System.out.println("we are in methodOne");
+    }
+    
+    @Override
+    public int addition(int x,int y){
+        return a+b;
+    }
+    public static void main(String args[]){
+       MyAppImpl  mobj = new MyAppImpl();
+       mobj.methodOne();
+       int res=mobj.addition(10,30);
+       System.out.println("sum of two numbers is : "+res);
+       //interface referenevarible = holding it implementation class Object(polymorishm)
+       MyApp moa = new MyAppImpl();
+       moa.methodOne();
+    
+       int res1=moa.addition(30,30);
+       System.out.println("sum of two numbers is : "+res1);
+       
+    
+    }
+}
+
+
+2)
+interface First{
+    public void methodOne();
+    public String sayHello();
+    public int addition(int x,int y,int z);
+}
+
+abstract class FirstImpl implements First{
+    @Override
+    public void methodOne(){
+        System.out.println("we are in methodOne of FirstImpl");
+    }
+    
+    @Override
+    public String sayHello(){
+        return "hello interfaces";
+    }
+    
+}
+class Second extends FirstImpl{
+    @Override
+    public int addition(int x,int y,int z){
+        return x+y+z;
+    }
+    public static void main(String args[]){
+        Second sobj = new Second();
+        int res = sobj.addition(10,40,50);
+        System.out.println("sum of two numbers is : "+res);
+        String msg = sobj.sayHello();
+        System.out.println(msg);
+        sobj.methodOne();
+    }
+    
+}
+
+
+Exception:
+----------
+class MyClass{
+    
+public static void main(String args[]){
+    System.out.println("statement-1");
+    int x=10;
+    int y=0;
+    try{
+    int z=x/y; //exception is raised
+    System.out.println(z);
+    
+    }catch(ArithmeticException ae){ //handle the 
+        ae.printStackTrace();
+        System.out.println(ae.getMessage());
+        System.out.println(ae);
+    }
+     System.out.println("rest of the code");
+    
+}
+}
+
+
+2)
+class MyClass{
+    
+public static void main(String args[]){
+    
+    try{
+    int arr[] = new int[5]; //array declared with size of five elements
+    arr[0]=10;
+    arr[1]=30;
+    arr[2]=40;
+    arr[3]=5;
+    arr[4]=15;
+        
+    for(int i=0; i<=arr.length;i++){
+        System.out.println("array  elements at index "+i+" "+arr[i]);
+    }
+    }catch(ArrayIndexOutOfBoundsException ae){
+        System.out.println(ae);
+    }
+    
+    
+    System.out.println("rest of the code");
+    
+}
+}
+
+3)
+---
+class MyClass{
+    
+public static void main(String args[]) {
+    
+    System.out.println("statement-1");
+    int a=10;
+    int b=0;
+    
+     
+    try{
+    int c=a/b;
+    
+    Thread.sleep(2000);
+    
+    }catch(InterruptedException ie){
+        System.out.println(ie);
+    }catch(ArithmeticException ae){
+        System.out.println("Denominator cannot be zero");
+    }
+    finally{
+        System.out.println("finally block is ment for to write code for closing connections objects.");
+    }
+    
+  
+    System.out.println("Statement-2");
+    
+}
+}
+
