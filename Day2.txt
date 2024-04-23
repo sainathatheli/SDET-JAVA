@@ -1,0 +1,395 @@
+// You are using Java
+import java.util.Scanner;
+
+class AgeException extends Exception{
+    AgeException(String s){
+        super(s);
+    }
+}
+
+class Main{
+    public static void main(String args[]){
+        Scanner sc= new Scanner(System.in);
+        int age = sc.nextInt();
+        try{
+        if(age < 18){
+            throw new AgeException("Age is less than 18 is not eligible to vote");
+        
+        }else{
+            System.out.println("Age is valid ,he or she can caste vote");
+        }
+        }catch(AgeException ae){
+            System.out.println(ae.getMessage());
+        }
+        
+    }
+    
+}
+
+
+LinkedList:
+-----------
+import java.util.LinkedList;
+import java.util.ListIterator;
+class Main{
+    public static void main(String args[]){
+        LinkedList<String>  al = new LinkedList<>();
+        //add the elements into  ArrayList
+        
+        al.add("mango");
+        al.add("pineapple");
+        al.add("apple");
+        al.add("orange");
+        
+        //to get the size 
+        System.out.println("No of  elements  are : "+al.size());
+        System.out.println("Elements are : ");
+        System.out.println(al);
+        
+        //delete an object is pineapple
+        al.remove(1);
+        
+         System.out.println("After remove Elements are : ");
+        System.out.println(al);
+        
+       //adding element using at index position
+       al.set(2,"Kiwi"); //replace
+       
+          System.out.println("After adding an Element : ");
+        System.out.println(al);
+        
+        //search a element using contains()
+        boolean b =al.contains("Kiwi");
+        System.out.println("element is fount are not ? :"+b);
+        
+    System.out.println("Displaying the elements using for loop : ");
+    
+    for(int i=0;i<al.size();i++){
+      System.out.println(al.get(i));   
+        
+    }
+    System.out.println("Displaying the elements using enhanced for loop : ");
+    
+    for(String fruits :al){
+    System.out.println(fruits);
+        
+    }
+    System.out.println("Displaying the Forwward using Listiterator: ");
+    
+    ListIterator<String> iobj = al.listIterator();
+    while(iobj.hasNext()){
+        System.out.println(iobj.next());
+    }
+    
+    System.out.println("Displaying the elements Backword using iterator: ");
+    
+    while(iobj.hasPrevious()){
+        System.out.println(iobj.previous());
+    }
+
+    
+    }
+}
+
+Exercise:
+---------
+1)Write a entity or javabean class Product.
+a)fields or attributes are : pid,pname,price
+b)Generate constructors and setters and getters
+
+2)WAP to store product objects into Collection Class ArrayList and display it.
+
+package de1;
+
+public class Product {
+   
+	private int pid;
+	private String pname;
+	private double price;
+	public Product() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Product(int pid, String pname, double price) {
+		super();
+		this.pid = pid;
+		this.pname = pname;
+		this.price = price;
+	}
+	public int getPid() {
+		return pid;
+	}
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	@Override
+	public String toString() {
+		return "Product [pid=" + pid + ", pname=" + pname + ", price=" + price + "]";
+	}
+	
+}
+
+
+------------
+// You are using Java
+import java.util.TreeSet;
+
+class Product implements Comparable<Product>{
+   
+	private int pid;
+	private String pname;
+	private double price;
+	
+	public Product() {
+		super();
+	}
+	public Product(int pid, String pname, double price) {
+		super();
+		this.pid = pid;
+		this.pname = pname;
+		this.price = price;
+	}
+	public int getPid() {
+		return pid;
+	}
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	@Override
+	public String toString() {
+		return "Product [pid=" + pid + ", pname=" + pname + ", price=" + price + "]";
+	}
+	//custom sorting code for product object based on price
+	public int compareTo(Product p1){
+	    if(this.price==p1.getPrice()){
+	    return 0;
+	    }else if(price < p1.getPrice()){
+	        return 1;
+	    }else{
+	        return -1;
+	    }
+	}
+	
+}
+
+
+class Main{
+    public static void main(String args[]){
+        
+        TreeSet<Product> ts = new TreeSet<>();
+         
+         Product p1 = new Product(1,"mouse",300);
+         Product p2 = new Product(2,"Monitor",8000);
+         Product p3 = new Product(3,"laptop",40000);
+         Product p4 = new Product(4,"Ram",5000);
+         
+         ts.add(p1);
+         ts.add(p2);
+         ts.add(p3);
+         ts.add(p4);
+         
+         System.out.println(ts);
+         
+
+    }
+}
+
+2)
+----
+// You are using Java
+import java.util.TreeSet;
+import java.util.Comparator;
+
+class Product{
+   
+	private int pid;
+	private String pname;
+	private double price;
+	
+	public Product() {
+		super();
+	}
+	public Product(int pid, String pname, double price) {
+		super();
+		this.pid = pid;
+		this.pname = pname;
+		this.price = price;
+	}
+	public int getPid() {
+		return pid;
+	}
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	@Override
+	public String toString() {
+		return "Product [pid=" + pid + ", pname=" + pname + ", price=" + price + "]";
+	}
+	
+	
+}
+
+class MyComparator implements Comparator<Product>{
+    public int compare(Product p1,Product p2){
+        double price1 = p1.getPrice();
+        double price2 = p2.getPrice();
+        
+        if(price1 == price2){
+            return 0;
+        }else if(price1 <price2){
+            return 1;
+        }else{
+            return -1;
+        }
+    }
+}
+class Main{
+    public static void main(String args[]){
+        
+        TreeSet<Product> ts = new TreeSet<>(new MyComparator());
+         
+         Product p1 = new Product(1,"mouse",300);
+         Product p2 = new Product(2,"Monitor",8000);
+         Product p3 = new Product(3,"laptop",40000);
+         Product p4 = new Product(4,"Ram",5000);
+         
+         ts.add(p1);
+         ts.add(p2);
+         ts.add(p3);
+         ts.add(p4);
+         
+         System.out.println(ts);
+         
+
+    }
+}
+
+
+import java.util.HashMap;
+import java.util.Collection;
+import java.util.Set;
+import java.util.Map.Entry;
+class Main{
+    public static void main(String args[]){
+
+    HashMap<Integer,String> hm = new HashMap<>();
+      //add the elements using put
+      
+      hm.put(1,"John");
+      hm.put(2,"Scott");
+      hm.put(3,"Smith");
+      hm.put(4,"Martin");
+      
+      System.out.println("The elements are :");
+      System.out.println(hm);
+      hm.put(3,"Raju");
+      System.out.println(hm);
+      
+     String s1 = hm.get(2);
+     System.out.println("Based on key 2 the value : "+s1);
+     
+     boolean b =hm.containsKey(3);
+     System.out.println("Key is found or not ? "+b);
+     
+     hm.remove(4);
+     
+      System.out.println("After Remove The elements are :");
+      System.out.println(hm);
+      
+      hm.replace(2,"Allen");
+      
+      System.out.println("After Replace smith to allen The elements are :");
+      System.out.println(hm);
+      
+      Collection vals =hm.values();//only values
+      System.out.println("Values are :");
+      for(Object v:vals){
+      System.out.println(v);
+      }
+      System.out.println("Keys are :");
+      Set<Integer> st =hm.keySet(); //only keySet
+      for(Integer i :st){
+          System.out.println(i);
+      }
+      
+      
+      //displaying the key,value ->pairs ->entrySet;
+       System.out.println("Key and values are :");
+      for(Entry<Integer,String> e:hm.entrySet()){
+          System.out.println(e.getKey()+" "+e.getValue());
+      }    
+    }
+
+}
+
+
+Exercise:
+---------
+1)Write a entity or javabean class Product.
+a)fields or attributes are : pid,pname,price
+b)Generate constructors and setters and getters,toString().
+
+2)WAP to store product objects into Map(TreeMap) as value and key as pid(Integer).
+TreeMap<Integer,Product> tm = new TreeMap<>();
+a)Get the only values(Product Objects)
+b) Display it using enhanced forloop
+
+
+
+Example:
+========
+class Main implements Runnable{
+    //providing implementation for run()
+    public void run(){
+        System.out.println("Thread is running...");
+    }
+    
+    public static void main(String args[]){
+        Main mobj = new Main();
+        Thread t = new Thread(mobj);
+        t.start();
+    }
+    
+}
+
+
+
+
+
+
