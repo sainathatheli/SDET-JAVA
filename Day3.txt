@@ -1,0 +1,133 @@
+Exercise:
+---------
+1)Write a entity or javabean class Product.
+a)fields or attributes are : pid,pname,price
+b)Generate constructors and setters and getters,toString().
+
+2)ClassName is : CrudApp
+Write a java program to store product objects into Map(HashMap) as value and key as pid(Integer).
+HashMap<Integer,Product> tm = new HashMap<>();
+
+a)public void addProduct(Product p);
+b)public Product getProductById(int id);
+c)public  void  deleteProductById(int id);
+d)pubic  List<Product> getAllProductDetails();
+
+3)Main class
+-----------
+using SwitchCase
+Enter the Choice
+1.Add the product
+2.Delete the Product
+3.Search the Product BasedOnID
+4.GEt ALl the product Details.
+
+---------------------------------
+// You are using Java
+import java.util.*;
+import java.util.Map.Entry;
+class Product{
+   
+	private int pid;
+	private String pname;
+	private double price;
+	
+	public Product() {
+		super();
+	}
+	public Product(int pid, String pname, double price) {
+		super();
+		this.pid = pid;
+		this.pname = pname;
+		this.price = price;
+	}
+	public int getPid() {
+		return pid;
+	}
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	@Override
+	public String toString() {
+		return "Product [pid=" + pid + ", pname=" + pname + ", price=" + price + "]";
+	}
+}
+
+class CrudApp{
+    HashMap<Integer,Product> hm ;
+    CrudApp(){
+        hm= new HashMap<>();        
+    }
+
+    public void addProduct(Product p){
+        hm.put(p.getPid(),p);
+    }
+    
+    public List<Product> getAllProductDetails(){
+          List<Product> al = new ArrayList<>();
+          for(Entry<Integer,Product> en : hm.entrySet()){
+              Product p = en.getValue();
+              al.add(p);
+          }
+          return al;
+    }
+}
+
+
+class Main{
+    
+    public static void main(String args[]){
+        CrudApp app = new CrudApp();
+        Scanner sc= new Scanner(System.in);
+        System.out.println("Enter the choice");
+        System.out.println("1. Add Product");
+        System.out.println("2. Get All The Product Details");
+        System.out.println("3. Exit");
+        int choice = sc.nextInt();
+        
+        switch(choice){
+        case 1:   int id = sc.nextInt();
+                  String name=sc.next()+sc.nextLine();
+                  double price = sc.nextDouble();
+                  Product p = new Product(id,name,price);
+                  app.addProduct(p); //Curdap
+                  break;
+        case 2:   List<Product> li =app.getAllProductDetails();
+                  for(Product p1 : li){
+                      System.out.println(p1.getPid()+" "+p1.getPname()+" "+p1.getPrice());
+                  }
+                  break;
+        case 3:  System.exit(0);
+        }
+        
+        
+        
+    }
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
