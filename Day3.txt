@@ -119,6 +119,889 @@ class Main{
     
 }
 
+==============================
+JDBC:
+=====
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+class Main{
+    public static void main(String args[]){
+        //load or register the driver
+        //class.forName("com.mysql.cj.jdbc.Driver");
+        String url="jdbc:mysql://localhost/ri_db";
+        String uname="test";
+        String pwd = "test123";
+        try{
+        Connection con  = DriverManager.getConnection(url,uname,pwd);
+        
+        if(con!=null){
+            System.out.println("connection is successfully established..!"+con);
+        }
+        
+        con.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+}
+
+
+2)Write a jdbc program
+a)create a table named as Product and columns are (pid,pname,price)
+b)insert five records into Product Table
+c) Display all the records from Product
+
+sol:
+-----
+// You are using Java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+class Main{
+    public static void main(String args[]){
+        //load or register the driver
+        //class.forName("com.mysql.cj.jdbc.Driver");
+        String url="jdbc:mysql://localhost/ri_db";
+        String uname="test";
+        String pwd = "test123";
+        try{
+        Connection con  = DriverManager.getConnection(url,uname,pwd);
+        //creating a table
+        String query1="create table product(pid int,pname varchar(20),price decimal(10,2))";
+        
+        //creating statement Object
+        Statement stmt = con.createStatement();
+        boolean b =stmt.execute(query1); //false
+        if(!b){
+            System.out.println("Table is created ...!");
+        }
+        
+        //insert five records into product Table
+        String query2="insert into product values(1,'mouse',300),(2,'pendrive',500),(3,'monitor',5000),"
+                     +"(4,'laptop',40000),(5,'keyboard',1000)";
+                     
+        int count=stmt.executeUpdate(query2);
+        if(count>0){
+            System.out.println("Records inserted..!");
+        }
+        //retrieve all the records from the table;
+        String query3="select * from product";
+        ResultSet rs =stmt.executeQuery(query3);
+        
+        System.out.println("ProductDetails are :");
+        while(rs.next()){
+            //display the table data using getString() with column position.
+            //System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
+            
+            //display the table data using getString() with column Names.
+            //System.out.println(rs.getString("pid")+" "+rs.getString("pname")+" "+rs.getString("price"));
+            
+            //display the table data using columDataype and ColumnPosition
+            //System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getDouble(3));
+            
+            //display the table data using columnDataype and ColumnName
+            System.out.println(rs.getInt("pid")+" "+rs.getString("pname")+" "+rs.getDouble("price"));
+            
+        }
+        
+        rs.close();
+        stmt.close();
+        con.close();
+        
+        
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+}
+
+
+3)
+---
+write a jdbc code to update a record where pid=1
+note update pname :mouse->optialmouse
+            price :300 -> 1300
+
+String query4="update product set pname='opticalmouse',price=1300  where pid=1";
+
+sol:
+----
+// You are using Java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+class Main{
+    public static void main(String args[]){
+        //load or register the driver
+        //class.forName("com.mysql.cj.jdbc.Driver");
+        String url="jdbc:mysql://localhost/ri_db";
+        String uname="test";
+        String pwd = "test123";
+        try{
+        Connection con  = DriverManager.getConnection(url,uname,pwd);
+        //creating a table
+        String query1="create table product(pid int,pname varchar(20),price decimal(10,2))";
+        
+        //creating statement Object
+        Statement stmt = con.createStatement();
+        boolean b =stmt.execute(query1); //false
+        if(!b){
+            System.out.println("Table is created ...!");
+        }
+        
+        //insert five records into product Table
+        String query2="insert into product values(1,'mouse',300),(2,'pendrive',500),(3,'monitor',5000),"
+                     +"(4,'laptop',40000),(5,'keyboard',1000)";
+                     
+        int count=stmt.executeUpdate(query2);
+        if(count>0){
+            System.out.println("Records inserted..!");
+        }
+        //retrieve all the records from the table;
+        String query3="select * from product";
+        ResultSet rs =stmt.executeQuery(query3);
+        
+        System.out.println("ProductDetails are :");
+        while(rs.next()){
+            //display the table data using getString() with column position.
+            //System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
+            
+            //display the table data using getString() with column Names.
+            //System.out.println(rs.getString("pid")+" "+rs.getString("pname")+" "+rs.getString("price"));
+            
+            //display the table data using columDataype and ColumnPosition
+            //System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getDouble(3));
+            
+            //display the table data using columnDataype and ColumnName
+            System.out.println(rs.getInt("pid")+" "+rs.getString("pname")+" "+rs.getDouble("price"));
+            
+        }
+          //updating the product name and price of pid-> 1
+         String query4="update product set pname='opticalmouse',price=1300  where pid=1";
+          int recordCount= stmt.executeUpdate(query4);
+          if(recordCount > 0){
+              System.out.println("Record is updated Successfully");
+          }
+        
+          //retrieve all the records from the table;
+        System.out.println("After Record is Udpated the ProductDetail are:");
+        String query5="select * from product";
+        ResultSet rs1 =stmt.executeQuery(query5);
+        
+          while(rs1.next()){
+            //display the table data using columnDataype and ColumnName
+            System.out.println(rs1.getInt("pid")+" "+rs1.getString("pname")+" "+rs1.getDouble("price"));
+            
+        }
+        
+        
+        rs.close();
+        stmt.close();
+        con.close();
+        
+        
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+}
+
+or
+-----
+// You are using Java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+class Main{
+    public static void main(String args[]){
+        //load or register the driver
+        //class.forName("com.mysql.cj.jdbc.Driver");
+        String url="jdbc:mysql://localhost/ri_db";
+        String uname="test";
+        String pwd = "test123";
+        try{
+        Connection con  = DriverManager.getConnection(url,uname,pwd);
+        //creating a table
+        String query1="create table product(pid int,pname varchar(20),price decimal(10,2))";
+        
+        //creating statement Object
+        Statement stmt = con.createStatement();
+        boolean b =stmt.execute(query1); //false
+        if(!b){
+            System.out.println("Table is created ...!");
+        }
+        
+        //insert five records into product Table
+        String query2="insert into product values(1,'mouse',300),(2,'pendrive',500),(3,'monitor',5000),"
+                     +"(4,'laptop',40000),(5,'keyboard',1000)";
+                     
+        int count=stmt.executeUpdate(query2);
+        if(count>0){
+            System.out.println("Records inserted..!");
+        }
+        //retrieve all the records from the table;
+        String query3="select * from product";
+        ResultSet rs =stmt.executeQuery(query3);
+        
+        System.out.println("ProductDetails are :");
+        while(rs.next()){
+            //display the table data using getString() with column position.
+            //System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
+            
+            //display the table data using getString() with column Names.
+            //System.out.println(rs.getString("pid")+" "+rs.getString("pname")+" "+rs.getString("price"));
+            
+            //display the table data using columDataype and ColumnPosition
+            //System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getDouble(3));
+            
+            //display the table data using columnDataype and ColumnName
+            System.out.println(rs.getInt("pid")+" "+rs.getString("pname")+" "+rs.getDouble("price"));
+            
+        }
+          //updating the product name and price of pid-> 1
+         String query4="update product set pname='opticalmouse',price=1300  where pid=1";
+          int recordCount= stmt.executeUpdate(query4);
+          if(recordCount > 0){
+              System.out.println("Record is updated Successfully");
+          }
+        
+          //retrieve all the records from the table;
+        System.out.println("After Record is Udpated the ProductDetail are:");
+        String query5="select * from product";
+        rs=stmt.executeQuery(query5);
+        
+          while(rs.next()){
+            //display the table data using columnDataype and ColumnName
+            System.out.println(rs.getInt("pid")+" "+rs.getString("pname")+" "+rs.getDouble("price"));
+            
+        }
+        
+        
+        rs.close();
+        stmt.close();
+        con.close();
+        
+        
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+}
+
+3)
+Write a jdbc code to delete a record from product table
+Hint: pid =3;
+
+String query4="delete from product where pid=3";
+
+sol:
+----
+// You are using Java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+class Main{
+    public static void main(String args[]){
+        //load or register the driver
+        //class.forName("com.mysql.cj.jdbc.Driver");
+        String url="jdbc:mysql://localhost/ri_db";
+        String uname="test";
+        String pwd = "test123";
+        try{
+        Connection con  = DriverManager.getConnection(url,uname,pwd);
+        //creating a table
+        String query1="create table product(pid int,pname varchar(20),price decimal(10,2))";
+        
+        //creating statement Object
+        Statement stmt = con.createStatement();
+        boolean b =stmt.execute(query1); //false
+        if(!b){
+            System.out.println("Table is created ...!");
+        }
+        
+        //insert five records into product Table
+        String query2="insert into product values(1,'mouse',300),(2,'pendrive',500),(3,'monitor',5000),"
+                     +"(4,'laptop',40000),(5,'keyboard',1000)";
+                     
+        int count=stmt.executeUpdate(query2);
+        if(count>0){
+            System.out.println("Records inserted..!");
+        }
+        //retrieve all the records from the table;
+        String query3="select * from product";
+        ResultSet rs =stmt.executeQuery(query3);
+        
+        System.out.println("ProductDetails are :");
+        while(rs.next()){
+            //display the table data using getString() with column position.
+            //System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
+            
+            //display the table data using getString() with column Names.
+            //System.out.println(rs.getString("pid")+" "+rs.getString("pname")+" "+rs.getString("price"));
+            
+            //display the table data using columDataype and ColumnPosition
+            //System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getDouble(3));
+            
+            //display the table data using columnDataype and ColumnName
+            System.out.println(rs.getInt("pid")+" "+rs.getString("pname")+" "+rs.getDouble("price"));
+            
+        }
+        //deleteing a record
+        String query4="delete from product where pid=3";
+       int recordDeleted =stmt.executeUpdate(query4);
+       if(recordDeleted > 0){
+           System.out.println("Record is deleted...!");
+       }
+       
+       //after delete display the records;
+       String query5="select * from product";
+       rs=stmt.executeQuery(query5);
+       System.out.println("After Delete the REcords are : ");
+       while(rs.next()){
+       System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
+       }
+        
+        rs.close();
+        stmt.close();
+        con.close();
+        
+        
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+}
+
+
+Excerise:
+==========
+
+1) Write a jdbc program
+2) create a table employee(empid,ename,sal)
+3) using Scanner class ,insert one records into the employee table.// using Statement Objet
+4) Display the Employee Records from the table.
+
+sol:
+----
+// You are using Java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.util.Scanner;
+class Main{
+    public static void main(String args[]){
+        Scanner sc= new Scanner(System.in);
+        int eid =sc.nextInt();
+        String en =sc.next()+sc.nextLine();
+        double sal =sc.nextDouble();
+        //load or register the driver
+        //class.forName("com.mysql.cj.jdbc.Driver");
+        String url="jdbc:mysql://localhost/ri_db";
+        String uname="test";
+        String pwd = "test123";
+        try{
+        Connection con  = DriverManager.getConnection(url,uname,pwd);
+        //creating a table
+        String query1="create table employee(empid int,ename varchar(20),sal decimal(10,2))";
+        
+        //creating statement Object
+        Statement stmt = con.createStatement();
+        boolean b =stmt.execute(query1); //false
+        if(!b){
+            System.out.println("Table is created ...!");
+        }
+        String query2="insert into employee values("+eid+",'"+en+"',"+sal+") ";
+         int count= stmt.executeUpdate(query2);
+         if(count>0){
+             System.out.println("Record is inserted");
+         }else{
+             System.out.println("Record is not inserted");
+         }
+        String query3="select * from employee";
+        ResultSet rs =stmt.executeQuery(query3);
+        while(rs.next()){
+            System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
+        }
+        
+        stmt.close();
+        con.close();
+        
+        
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+ResultSet:
+============
+1. An object of ResultSet allows us to retrieve the data by default only in 
+   forward direction but not in backward direction and random retrieval.
+
+2. Whenever we get the database data in ResultSet object which will be temporarily
+   disconnected from the database.
+
+3. ResultSet object does not allows us to perform any modifications on ResultSet object.
+
+4. Hence, the ResultSet is by default non-scrollable/ disconnected ResultSet.
+
+
+Scrollable ResultSet s and Updatable ResultSet :
+=================================================
+Whenever we create an object of ResultSet by default, it allows us to retrieve in forward
+direction only and we cannot perform any modifications on ResultSet object. 
+
+Therefore, by default the ResultSet object is non-scrollable and non-updatable ResultSet.
+
+
+Scrollable ResultSet:
+-------------------------
+A scrollable ResultSet is one which allows us to retrieve the data in forward direction as well
+as backward direction but no updations are allowed. 
+
+In order to make the non-scrollable ResultSet as scrollable ResultSet as scrollable ResultSet
+we must use the following createStatement which is present in Connection interface.
+
+public Statement createStatement(int Type,int Mode);
+
+Type represents type of scrollability and Mode represents either read only or updatable. 
+
+The value of Type and value of Mode are present in ResultSet interface as constant data members and
+they are:
+
+
+int Type
+---------
+TYPE_FORWARD_ONLY  
+TYPE_SCROLL_INSENSITIVE
+
+int Mode
+--------
+CONCUR_READ_ONLY 
+
+
+Example:
+========
+Statement st=con.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+ResultSet rs=st.executeQuery ( select * from tablename );
+
+
+The following methods which are available in ResultSet interface which allows us to 
+retrieve the data either in forward direction or in backward direction or in random retrieval:
+
+public boolean next (); 
+public void beforeFirst (); 
+public boolean isFirst (); 
+public void first (); 
+public boolean isBeforeFirst (); 
+public boolean previous (); 
+public void afterLast (); 
+public boolean isLast ();
+public void last (); 
+public boolean isAfterLast (); 
+public void absolute (int);
+public void relative (int);
+
+
+Example:
+=======
+Write a java program  to retreive the records from Prodcut table and
+using scrollable resultset display the records in forword direction ,backword direction and random.
+uisng Statment object with Type=TYPE_SCROLL_INSENSITIVE, mode=CONCUR_READ_ONLY ;
+
+Hint:-
+Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+
+sol:
+----
+// You are using Java
+// You are using Java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+class Main{
+    public static void main(String args[]){
+        //load or register the driver
+        //class.forName("com.mysql.cj.jdbc.Driver");
+        String url="jdbc:mysql://localhost/ri_db";
+        String uname="test";
+        String pwd = "test123";
+        try{
+        Connection con  = DriverManager.getConnection(url,uname,pwd);
+        //creating a table
+        String query1="create table product(pid int,pname varchar(20),price decimal(10,2))";
+        
+        //creating statement Object
+        Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+        boolean b =stmt.execute(query1); //false
+        if(!b){
+            System.out.println("Table is created ...!");
+        }
+        //insert five records into product Table
+        String query2="insert into product values(1,'mouse',300),(2,'pendrive',500),(3,'monitor',5000),"
+                     +"(4,'laptop',40000),(5,'keyboard',1000)";
+                     
+        int count=stmt.executeUpdate(query2);
+        if(count>0){
+            System.out.println("Records inserted..!");
+        }
+        //retrieve all the records from the table;
+        String query3="select * from product";
+        ResultSet rs =stmt.executeQuery(query3);
+        
+        System.out.println("ProductDetails are in forward direction:");
+        while(rs.next()){
+            //display the table data using getString() with column position.
+            System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
+        }
+        /*System.out.println("ProductDetails are in backward direction :");
+        while(rs.previous()){
+            //display the table data using getString() with column position.
+            System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
+            
+        }*/
+        
+        rs.absolute(3);
+        System.out.println("The random product record is : ");
+        System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
+         
+        
+        
+        rs.close();
+        stmt.close();
+        con.close();
+        
+        
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+}
+
+
+Example:
+--------
+Write a jdbc program
+update the record where pid =1
+->mouse ->opticalmouse
+->price ->1300
+using PreparedStatement and Scanner class.
+
+SOl:
+----
+
+String query4 = "update product set pname=?,price=? where pid=?";
+
+Note:
+?-- indicates Positional Parameters(i.e, this Positional Parameter index starts from 1)
+
+We can initialize the positional parameters using setXXX() methods.
+
+Sol:
+----
+// You are using Java
+// You are using Java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.util.Scanner;
+class Main{
+    public static void main(String args[]){
+        //load or register the driver
+        //class.forName("com.mysql.cj.jdbc.Driver");
+        String url="jdbc:mysql://localhost/ri_db";
+        String uname="test";
+        String pwd = "test123";
+        try{
+        Connection con  = DriverManager.getConnection(url,uname,pwd);
+        //creating a table
+        String query1="create table product(pid int,pname varchar(20),price decimal(10,2))";
+        
+        //creating statement Object
+        Statement stmt = con.createStatement();
+        boolean b =stmt.execute(query1); //false
+        if(!b){
+            System.out.println("Table is created ...!");
+        }
+        //insert five records into product Table
+        String query2="insert into product values(1,'mouse',300),(2,'pendrive',500),(3,'monitor',5000),"
+                     +"(4,'laptop',40000),(5,'keyboard',1000)";
+                     
+        int count=stmt.executeUpdate(query2);
+        if(count>0){
+            System.out.println("Records inserted..!");
+        }
+        //retrieve all the records from the table;
+        String query3="select * from product";
+        ResultSet rs =stmt.executeQuery(query3);
+        
+        System.out.println("ProductDetails are ");
+        while(rs.next()){
+            //display the table data using getString() with column position.
+            System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
+        }
+       
+       //update the record using PreapareStatment
+        String query4 = "update product set pname=?,price=? where pid=?";
+        
+        Scanner sc= new Scanner(System.in);
+        int pid = sc.nextInt();
+        String pname=sc.next()+sc.nextLine();
+        double price = sc.nextDouble();
+         PreparedStatement pstmt =con.prepareStatement(query4);
+          pstmt.setString(1,pname);
+          pstmt.setDouble(2,price);
+          pstmt.setInt(3,pid);
+       
+       int up =pstmt.executeUpdate();
+       if(up>0){
+           System.out.println("REcord is updated");
+       }
+       
+       String query5="select * from product";
+        rs =stmt.executeQuery(query5);
+        System.out.println("After Record is updated");
+        while(rs.next()){
+            //display the table data using getString() with column position.
+            System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
+        }
+        rs.close();
+        stmt.close();
+        con.close();
+        
+        
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+}
+
+Exercise:
+---------
+Write a jdbc program
+delete the record where pid=3
+using PreparedStatement and Scanner class.
+
+Sol:
+====
+// You are using Java
+// You are using Java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.util.Scanner;
+class Main{
+    public static void main(String args[]){
+        //load or register the driver
+        //class.forName("com.mysql.cj.jdbc.Driver");
+        String url="jdbc:mysql://localhost/ri_db";
+        String uname="test";
+        String pwd = "test123";
+        try{
+        Connection con  = DriverManager.getConnection(url,uname,pwd);
+        //creating a table
+        String query1="create table product(pid int,pname varchar(20),price decimal(10,2))";
+        
+        //creating statement Object
+        Statement stmt = con.createStatement();
+        boolean b =stmt.execute(query1); //false
+        if(!b){
+            System.out.println("Table is created ...!");
+        }
+        //insert five records into product Table
+        String query2="insert into product values(1,'mouse',300),(2,'pendrive',500),(3,'monitor',5000),"
+                     +"(4,'laptop',40000),(5,'keyboard',1000)";
+                     
+        int count=stmt.executeUpdate(query2);
+        if(count>0){
+            System.out.println("Records inserted..!");
+        }
+        //retrieve all the records from the table;
+        String query3="select * from product";
+        ResultSet rs =stmt.executeQuery(query3);
+        
+        System.out.println("ProductDetails are :");
+        while(rs.next()){
+            //display the table data using getString() with column position.
+            System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
+        }
+       
+       //update the record using PreapareStatment
+        String query4 = "delete from product where pid=?";
+        
+        Scanner sc= new Scanner(System.in);
+        int pid = sc.nextInt();
+        
+         PreparedStatement pstmt =con.prepareStatement(query4);
+          pstmt.setInt(1,pid);
+          
+       
+       int del =pstmt.executeUpdate();
+       if(del>0){
+           System.out.println("REcord is Deleted :");
+       }
+       
+       String query5="select * from product";
+        rs =stmt.executeQuery(query5);
+        System.out.println("After Record is Deleted");
+        while(rs.next()){
+            //display the table data using getString() with column position.
+            System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
+        }
+        rs.close();
+        stmt.close();
+        con.close();
+        
+        
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+}
+
+
+Exercise:
+========= 
+1)Write a Java Program to validate the name of an employee. Create and throw a user defined exception if firstName or lastName is blank.
+
+2)Create javabean class(Employee) fields are(empNo,firstName,lastName)
+Constructors and SettersandGetters ,toString().
+
+3)Create a java code to Store Employee object into HashMap<Integer,Employee>.
+  a)Add Employee
+  b)get All Employee records
+  c)Search Employee Based On firstName or LastName,if firstname,lastname is blank
+   throw the userdefined exception.
+
+Sol:
+----
+// You are using Java
+import java.util.HashMap;
+import java.util.Map.Entry;
+class BlankException extends Exception{
+    BlankException(String s){
+        super(s);
+    }
+}
+
+class Employee {
+
+ private int empNo;
+ private String firstName;
+ private String lastName;
+ 
+public Employee() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
+public Employee(int empNo, String firstName, String lastName) {
+	super();
+	this.empNo = empNo;
+	this.firstName = firstName;
+	this.lastName = lastName;
+}
+
+public int getEmpNo() {
+	return empNo;
+}
+
+public void setEmpNo(int empNo) {
+	this.empNo = empNo;
+}
+
+public String getFirstName() {
+	return firstName;
+}
+
+public void setFirstName(String firstName) {
+	this.firstName = firstName;
+}
+
+public String getLastName() {
+	return lastName;
+}
+
+public void setLastName(String lastName) {
+	this.lastName = lastName;
+}
+
+@Override
+public String toString() {
+	return "Employee [empNo=" + empNo + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+}
+}
+
+class Main{
+     public static void main(String args[]){
+         HashMap<Integer,Employee> hm = new HashMap<>(); 
+         
+         Employee e = new Employee(1001,"Smith","Adams");
+         Employee e1 = new Employee(1002,"sumit","Deshpande");
+         Employee e2 =new Employee(1003,"","");
+         
+         hm.put(e.getEmpNo(),e);
+         hm.put(e1.getEmpNo(),e1);
+         hm.put(e2.getEmpNo(),e2);
+         
+         System.out.println(hm);
+         
+         try{
+         for(Entry<Integer,Employee> es : hm.entrySet()){
+              Employee eobj = es.getValue();
+              if(eobj.getFirstName()=="" || eobj.getLastName()==""){
+                  throw new BlankException("First Name or last Name is blank");
+              }else{
+                  System.out.println(eobj.getEmpNo()+" "+eobj.getFirstName()+" "+eobj.getLastName());
+              }    
+              
+         }
+         
+         }catch(BlankException be){
+             System.out.println(be.getMessage());
+         }      
+     }
+   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
