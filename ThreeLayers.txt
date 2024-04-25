@@ -1,0 +1,167 @@
+// You are using Java
+// You are using Java
+import java.sql.*;
+class User{
+    private int id;
+    private String ename;
+    private String email;
+    
+    User(int id,String ename,String email){
+        this.id=id;
+        this.ename=ename;
+        this.email=email;
+    }
+    
+    public int getId(){
+        return this.id;
+    }
+    public void setId(int id){
+        this.id=id;
+    }
+    
+    public String getEname(){
+        return this.ename;
+    }
+    
+    public void setEname(String ename){
+        this.ename=ename;
+    }
+    
+    public String getEmail(){
+        return this.email;
+    }
+    public void setEmail(String email){
+       this.email=email;
+        
+    }
+}
+
+class DBConfig{
+    public static final String url="jdbc:mysql://localhost/ri_db";
+    public static final String uname ="test";
+    public static final String pwd="test123";
+    
+    
+    public static Connection getConnection(){
+        Connection con = null;
+        
+        try{
+            con=DriverManager.getConnection(url,uname,pwd);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return con;
+    }
+    }
+    
+//DaoLayer
+
+class UserDao{
+    
+    public void createTableObject(){
+        
+        Connection con = DBConfig.getConnection();
+        String query ="create table user(id int,ename varchar(100),email varchar(100))";
+        try{
+        Statement stmt=con.createStatement();
+          stmt.executeUpdate(query);
+        }catch(SQLException se){
+            se.printStackTrace();
+        }
+    }
+    
+    public int insertUser(User user){
+        int i =0;
+        
+        String query2="insert into user values(?,?,?)";
+        try{
+        Connection con = DBConfig.getConnection();
+        PreparedStatement pstmt =con.prepareStatement(query2);
+        pstmt.setInt(1,user.getId());
+        pstmt.setString(2,user.getEname());
+        pstmt.setString(3,user.getEmail());
+        
+        i =pstmt.executeUpdate();
+        }catch(SQLException se){
+            se.printStackTrace();
+        }
+        return i;
+        
+    }
+    
+    public User getUserById(int id){
+        User u =null;
+        
+        try{
+        String query3="select * from user where id=?";
+        Connection con = DBConfig.getConnection();
+        PreparedStatement pstmt =con.prepareStatement(query3);
+        pstmt.setInt(1,id);
+        
+        ResultSet rs=pstmt.executeQuery();
+        while(rs.next()){
+          u= new User(rs.getInt(1),rs.getString(2),rs.getString(3));  
+        }
+        
+        
+        }catch(SQLException se){
+            se.printStackTrace();
+        }
+       return u;
+        
+    }
+    
+}
+
+//serivcelayer
+class UserService{
+    
+    UserDao udao; //has a relation
+    
+    UserService(){
+        udao= new UserDao();
+    }
+    
+    public void createTableObject(){
+        udao.createTableObject(); //calling from UserDao
+    }
+    
+    public int insertUser(User user){
+        return udao.insertUser(user);
+    }
+    
+    public User getUserById(int id){
+       return  udao.getUserById(id);//
+    }
+}
+//application layer
+class Main{
+    public static void main(String args[]){
+        UserService uservice = new UserService();
+        uservice.createTableObject();
+        
+        //insert the data into user table
+        
+        User u1 = new User(101,"smith","smith@abc.com");
+        
+        int i =uservice.insertUser(u1);
+        if(i>0){
+            System.out.println("Records inserted ....!");
+        }
+        
+        
+        //get the data from the table
+        
+       User uobj= uservice.getUserById(101);
+       System.out.println("User Details are :");
+       System.out.println(uobj.getId()+" "+uobj.getEname()+" "+uobj.getEmail());
+    }
+    
+}
+
+
+
+
+
+
+
