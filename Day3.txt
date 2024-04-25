@@ -118,6 +118,51 @@ class Main{
     
     
 }
+=================================
+
+import java.util.Set;
+import java.util.Scanner;
+import java.util.TreeSet;
+class Book implements Comparable<Book>{
+    private String name;
+    private String author;
+    private int price;
+    Book(String name,String author,int price){
+        this.name=name;
+        this.author=author;
+        this.price=price;
+    }
+    public int compareTo(Book b1){    
+        if(price==b1.price){
+            return 0;
+        }else if(price < b1.price){
+            return 1;
+        }else{
+            return -1;
+        }
+    }
+    public String toString() {
+			return "Book:[BookName: " + name + ", author: " + author + ", Price: " + price + "]";
+		}
+}
+class Main{
+    public static void main(String[] args){
+        Set<Book> hm= new TreeSet<Book>();
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        System.out.println("Total number of Books: "+n);
+        for(int i=1; i<=n;i++){
+            String name=sc.next();
+            String author=sc.next();
+            int price=sc.nextInt();
+            hm.add(new Book(name,author,price));
+            System.out.println("Book "+i+" Details:");
+            System.out.println("The Sorted Collection after insertion is: "+hm);    
+        }
+    }
+    
+}
+
 
 ==============================
 JDBC:
