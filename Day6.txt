@@ -1,0 +1,44 @@
+<html>
+    <head>
+       <script>
+        var empno=1001;
+        var ename="smith";
+        var sal=3020;
+        
+        let sid=100;
+        let sname="raju";
+        let marks=75;
+           
+           function sayHell(){
+               document.writeln("we are in functions <br>");
+               document.writeln(empno+" "+ename+" "+sal+"<br>");
+               document.writeln(sid+" "+sname+" "+marks);
+           }
+           
+           function register(){
+               var fn =document.getElementById("firstname").value;
+               var ln=document.getElementById("lastname").value;
+              // document.writeln("Details are : <br>");
+               //document.writeln(fn+" "+ln);
+               document.getElementById("i1").innerHTML=fn+" "+ln;
+           }
+           //sayHell();
+           
+       </script>
+    </head>
+    
+    <body>
+        <div>
+        <form>
+            <label>FirstName</label><br>
+            <input type="text" id="firstname"/><br>
+            <label>LastName</label> <br>
+            <input type="text" id="lastname"/><br>
+            <input type="button" value="save" onclick="register()">
+            <!--<button onclick="sayHell()">clickhere</button> -->
+        </form>
+       <hr>
+       <p id="i1"></p>
+        </div>
+    </body>
+</html>
