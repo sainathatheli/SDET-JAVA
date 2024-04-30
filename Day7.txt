@@ -1,0 +1,436 @@
+
+In the above JavaScript code snippet, three lines of instructions are given. Every instruction runs once after the previous instruction gets executed. Due to this synchronous nature of javascript, we get the output of console logs in the sequence we provided in the program.
+
+When we say synchronous vs asynchronous JavaScript the execution sequence of instructions in a program is what differentiates them.
+
+What is Asynchronous in JavaScript?
+As we saw in the synchronous code example, all instructions in the program execute one after another, and every instruction waits for its previous instruction to get executed. Due to this nature of synchronous programming, sometimes important instructions get blocked due to some previous instructions, which causes a delay in the user interface. Asynchronous code execution allows to execution next instructions immediately and doesn't block the flow because of previous instructions.
+
+See the following coding example to understand how javascript works asynchronously -
+
+Code Example -
+
+console.log('First');
+
+// Set timeout for 2 seconds
+setTimeout(() => console.log('Second'), 2000);
+
+console.log('Third');
+
+Output -
+
+First
+Third
+Second
+
+Sr. no.	Synchronous JavaScript	Asynchronous JavaScript
+1	Instruction in synchronous code executes in a given sequence.	Instructions in asynchronous code can execute in parallel.
+2	Each operation waits for the previous operation to complete its execution.	Next operation can occur while the previous operation is still getting processed.
+3	Most of the time JavaScript is used as Synchronous code.	Asynchronous JavaScript is preferred in situations in which execution gets blocked indefinitely.
+
+
+
+-=========================
+
+<html>
+<body>
+
+<h1>JavaScript Functions</h1>
+<h2>Function Sequence</h2>
+<p>JavaScript functions are executed in the sequence they are called.</p>
+
+<p>The result of the calculation is:</p>
+<p id="demo"></p>
+
+<script>
+function myDisplayer(some) {
+  document.getElementById("demo").innerHTML = some;
+}
+
+function myCalculator(num1, num2) {
+  let sum = num1 + num2;
+  myDisplayer(sum);
+}
+
+myCalculator(5, 5);
+</script>
+</html>
+
+============================================
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>JavaScript Functions</h1>
+<h2>Callback Functions</h2>
+
+<p>The result of the calculation is:</p>
+<p id="demo"></p>
+
+<script>
+function myDisplayer(something) {
+  document.getElementById("demo").innerHTML = something;
+}
+
+function myCalculator(num1, num2, myCallback) {
+  let sum = num1 + num2;
+  myCallback(sum);
+}
+
+myCalculator(5, 5, myDisplayer);
+</script>
+
+</body>
+</html>
+=================================================
+      
+         var product ={ 
+                         id:1,
+                         name:"raju",
+                         sal:"laxmi",
+                         arr:function(){
+                             document.writeln("welcome to object");
+                         }
+                      }
+        
+        document.writeln(product.id+"<br>");
+        document.writeln(product.name+" "+product.sal+"<br>");
+        product.arr();
+
+====================
+<!DOCTYPE html>
+<html>
+  <body>
+    <button id="myBtn">Click me!</button>
+    <script>
+      // Defining Event Listener
+      document.getElementById('myBtn').addEventListener('click', function () {
+        // Code to be executed after listening to the event.
+        alert('Button is clicked')
+      })
+    </script>
+  </body>
+</html>
+=================================================
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    Enter value:
+    <input id="input" />
+
+    <script>
+      // Selecting input element
+      var input = document.getElementById('input')
+
+      // Assigning event listeners to the input element
+      input.addEventListener('keyup', function () {
+        console.log('keyup occured')
+      })
+      input.addEventListener('keypress', function () {
+        console.log('keypress occured')
+      })
+      input.addEventListener('change', function () {
+        console.log('change occured')
+      })
+    </script>
+  </body>
+</html>
+
+-----------------------
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    Resize the window
+
+    <script>
+      // Assigning event listeners to the window object
+      window.addEventListener('resize', function () {
+        console.log(
+          'window size is changed to : ' +
+            window.innerHeight +
+            'x' +
+            window.innerWidth,
+        )
+      })
+    </script>
+  </body>
+</html>
+======================
+The Value of "this" within the Handler
+We can get the information about the element from "this", So by using "this" in the function we can get information on an element like "id","class", and etc. value of this is the same as the currentTarget property of the current event argument.
+
+Example :
+
+In this example, we are getting the id of a current element using this.
+
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    Enter value:
+    <input id="currentInput" />
+
+    <script>
+      // Selecting input element
+      var input = document.getElementById('currentInput')
+
+      // Assigning event listeners to the input element
+      input.addEventListener('keyup', function () {
+        // Getting the value of id from 'this'
+        console.log(this.id)
+      })
+    </script>
+  </body>
+</html>
+===========
+Getting Data Into and Out of an Event Listener
+The Event Object, which is automatically supplied to the listener, is the only argument for event listeners, and the return value is overlooked. So, how can we get information into and out of them? There are several viable options for doing so :
+
+Getting Data Into an Event Listener Using "this"
+You could use Function.prototype.bind() to pass a value to an event listener via this reference variable, as explained before. In this example, we are giving a string variable containing the value "My string value".
+
+Example :
+
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <button id="button">Click Me</button>
+
+    <script>
+      var btn = document.getElementById('button')
+
+      // String value
+      const string = 'My string value'
+
+      // Adding an event listener
+      btn.addEventListener(
+        'click',
+        function () {
+          console.log(this)
+        }.bind(string),
+      )
+    </script>
+  </body>
+</html>
+============
+Getting Data Into and Out of an Event Listener
+The Event Object, which is automatically supplied to the listener, is the only argument for event listeners, and the return value is overlooked. So, how can we get information into and out of them? There are several viable options for doing so :
+
+Getting Data Into an Event Listener Using "this"
+You could use Function.prototype.bind() to pass a value to an event listener via this reference variable, as explained before. In this example, we are giving a string variable containing the value "My string value".
+
+Example :
+
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <button id="button">Click Me</button>
+
+    <script>
+      var btn = document.getElementById('button')
+
+      // String value
+      const string = 'My string value'
+
+      // Adding an event listener
+      btn.addEventListener(
+        'click',
+        function () {
+          console.log(this)
+        }.bind(string),
+      )
+    </script>
+  </body>
+</html>
+===========================================================================================================
+<html>
+    <head>
+        <script type="text/javascript">
+          function greet(name){
+              console.log("Hello "+name);
+          }
+          
+          //greet("ayush");
+          function add(){
+              var fn1 = document.getElementById("fn").value;
+               var cfn = parseInt(fn1);
+              var sn2= document.getElementById("sn").value;
+              var csn2=parseInt(sn2);
+              var sum=cfn+csn2;
+              console.log('sum is : '+sum)
+          }
+          
+        </script>
+    </head>
+    <body>
+        <form>
+            <label> Enter the firstNumber</label>
+            <input type="text" id="fn"/> <br>
+             <label> Enter the SecondNumber</label>
+            <input type="text" id="sn"/> <br>
+            <input type="button" value="sum" onclick="add()"/>
+        </form>
+    </body>
+</html>
+======================================
+<html>
+    
+    <head>
+        <script>
+            
+            function sayHello(){
+            document.writeln("weclome to java script <br>");
+            }
+            
+            //function with expression
+            var greeting=function(fn,ln){
+                document.writeln(fn+" "+ln);
+            }
+             //here the variable greeting will act as function.
+             
+            //arrow function or anonymomus function
+        
+            var wish=() =>{document.writeln("<br>weclome to arrow functions")}
+                               ///here wish variable name will act as the function
+            var add=(a,b) => a + b;
+            
+             //function with return type.
+           function fullName(fn,ln){
+           
+               return fn+" "+ln;
+           }
+        
+            sayHello();
+            
+            greeting("sumit","deshpande");
+            
+            wish();
+            
+           var res= add(10,20);
+           document.writeln("<br> sum of two numbers is : "+res);
+          
+           var fln =fullName("raju","rani")
+            console.log("FullName is : "+fln);
+        </script>
+    </head>
+    
+    
+</html>
+===========================================================
+<html>
+    
+    <head>
+        <script>
+            //function with default parameter value
+            
+       var chair={
+            color:"orange",
+            noOfWheels:4,
+            material:"plastice", //properties
+            movieable:function(){ //behaviour
+                document.writeln("chair is movieable");
+            }
+       }
+         document.writeln("chair data type is "+typeof(chair)+"<br>");
+         document.writeln("chair is : "+chair+"<br>");
+         document.writeln(JSON.stringify(chair));
+        //displaying the chair properties
+        document.writeln(chair.color+" "+chair.noOfWheels+" "+chair.material+"<br>");
+        chair.movieable();
+        
+        </script>
+    </head>
+    
+    
+</html>
+==============================
+<html>
+    
+    <head>
+        <script>
+          
+          var arr=["grapes","orange","dragon","strawberry"];
+          
+          document.writeln("element of arrray is : "+arr[2]+"<br>");
+          
+          for(let i=0;i<arr.length;i++){
+              document.writeln(arr[i]+"&nbsp;&nbsp;");
+          }
+          
+          
+        </script>
+    </head>
+    
+    
+</html>
+=========================================================
+<html>
+    
+    <head>
+        <script>
+          
+        var arr=[30,10,60,5,20,40];
+        
+        for(let i=0; i<arr.length;i++){
+           document.writeln(arr[i]);
+        }
+        document.writeln("<br>no of elements : "+arr.length+"<br>");
+        arr.push(80,120)
+        
+         document.writeln("After adding at last no of elements : "+arr.length+"<br>");
+         document.writeln(arr);
+         
+        arr.unshift(180,200);
+        document.writeln("After adding element at first  : "+arr.length+"<br>");
+         document.writeln(arr);
+          
+        </script>
+    </head>
+    
+    
+</html>
+==========================================
+<html>
+    
+    <head>
+        <script>
+          
+        var arr=[30,10,60,5,20,40];
+         
+        var filterElement= arr.filter(x=> x>=40);
+        
+        document.writeln(filterElement);
+        
+        var arr2=["smith","raju",{id:10,name:"martin",sal:3000}];
+        
+        document.writeln("<br>");
+           document.writeln(arr2+"<br>");
+           document.writeln(arr2[2].id+" "+arr2[2].name+" "+arr2[2].sal)
+          
+        </script>
+    </head>
+    
+    
+</html>
+========================================================================================
+<html>
+    <head>
+    
+    </head>
+    <body>
+        <h1>Employee Name is :</h1>
+        <p id="demo"></p>
+        <button class="mybtn">store</button>
+    <script>
+       
+      var btn= document.querySelector('.mybtn');
+       btn.addEventListener('click',function(){document.getElementById("demo").innerHTML="maniram"});
+       btn.addEventListener('click',function(){
+           console.log("Narendera Modi");
+       }
+       )
+     //document.querySelector('.mybtn').addEventListener('click',function(){document.getElementById("demo").innerHTML="maniram"});
+    
+    </script>
+    </body>
+</html>
+=========================================================================================================

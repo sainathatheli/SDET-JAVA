@@ -1,0 +1,488 @@
+Maven
+=====
+MAVEN is a "Project Management Framework", it is much more than a simple Build tool, its
+declarative and standard approach simplifies many aspects of the Project Lifecycle.
+
+The main Objective of MAVEN is:
+
+A comprehensive model for projects, which is reusable, maintainable, and easier to
+comprehend [Understand].
+
+Plugins or tools that interact with this declarative model.
+MAVEN follows "Convention over Configuration" Principle, which means that developers are not
+required to create build process themselves, Developers do not have to mention each and
+every configuration detail. Maven provides sensible default behavior for projects.
+MAVEN does the following activities of the project lifecycle automatically.
+
+Provides default Project Structer
+Download Required Dependencies [Jars files]
+Compiles Source code
+Packaging projects as .jar, .war, .ear,....
+Starts Server
+Deploying Projects into Servers.
+Perform Unit Testing
+Preparing Test Reports.
+Preparing Documentations
+Undeploy applications from Servers
+Stops Server.
+
+
+Project Object Model [pom.xml file]
+====================================
+i. POM Stands for Project Object Model.
+ii. POM is the fundamental unit in Maven.
+iii. POM is an XML file that contains information about the project and configuration details
+used by Maven to build the project.
+iv. POM contains default values for projects ike build directory, which is target; the source
+directory, which is src/main/java; the test source directory, which is src/test/java; and so
+on.
+v. In MAVEN1 , name of pom file is "project.xml", in MAVEN2 it was renamed to pom.xml.
+vi. When we execute MAVEN project then MAVEN will look for the project configurations in
+pom.xml file and gets the needed things and executes the project.
+
+In Building MAVEN Projects, pom.xml file contains the following configurations.
+1. Project Description
+2. Repository
+3. Dependency Management
+4. Project Inheritance
+5. Build Configuration
+6. Build Profiles
+
+Project Description:
+=====================
+In pom file, initial we will identify "Projection Description", it contains Project name, version
+number, packaged type,.....
+To specify the above details, we need to use the following XML tags
+
+1. <project ..... >
+2. <!-- Project Description -->
+3. <modelVersion> --- </modelVersion>
+4. <groupid> --- </groupid>
+5. <artifactid> -- </artifactid>
+6. <version> -- </version>
+7. -----
+8. -----
+9. </project>
+
+Where "<project>" tag is root tag in pom.xml file
+
+Where "<modelVersion>" tag declared which version of the MAVEN we are
+using.<modelVersion> tag will take 4.0.0 to support for MAVEN2.x/3.x versions.
+
+Where "<groupid>" tag will take an unique ID for an organization, or a project.Normally we
+use a group ID similar to the root Java package name of the project.
+
+Where "<artifactid>" tag will take name of the project.The artifact ID is used as name for a
+sub directory under the group ID directory in the Maven repository and as part of the
+name of the JAR file produced when building the project.The build result, a JAR, WAR
+or EAR file, is called an artifact in Maven.
+
+Where "<versin>" tag will take Project version number.
+
+Where "<packaging>" tag will take different packaging formats inorder to delivery the
+project like jar, war, ear,...
+
+EX:
+1. <project ..... >
+2. <!-- Project Description -->
+3. <modelVersion>4.0.0</modelVersion>
+4. <groupid>com.lti.banking</groupid>
+5. <artifactid>icici</artifactid>
+6. <version>1.0</version>
+7. <name> Account Application</name>
+8. <description> Application for Accounts module in icici Bank project </description>
+9. -----
+10.</project>
+
+
+Repository:
+==========
+If we use Dependencies in MAVEN Project then MAVEN will search for the dependent JARs in
+Repositories.
+MAVEN will use three types of Repositories in order to get dependencies.
+
+1. Local Repository:
+It is a location to manage and supply all dependencies, it will be created by MAVEN when we
+execute any MAVEN command first time.
+In general, MAVEN will create Local Repository at "C:/Users/User_Name/.m2/repository"
+EX: C:\Users\yoursystemname\.m2\repository
+
+2. Central Repository:
+It is a default Repository for MAVEN, it is located at "http://repo1.maven.org/maven2".
+IN MAVEN applications, we will use some other repositories are also explicitly like.
+
+1. http://repository.jboss.org/nexus/content/groups/public
+2. http://mvnrepository.com
+
+In MAVEN applications, if we want to use the above explict repositories then we have to configure
+them in pom file by using the following xml tags.
+1. <repositories>
+2. <repository>
+3. <id> jboss</id>
+4. <name> jboss repo</name>
+5. <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+6. </repository>
+7. </repositories>
+
+3. Remote Repository:
+
+In some Situations, Maven does not find the dependencies in Local Repository and in central
+repository, in this context, MAVEN stops the build process and generates some Exceptions. To
+overcome this problems, Maven has provided a new Features like "Remote Repository".
+
+Remote Repository is a developer's own custom repository containing required libraries or other
+project jars.
+
+To configure Remote Repository, we have to use the following XML tags in pom.xml file.
+1. <repositories>
+2. <repository>
+3. <id>com.lib</id>
+4. <url>http://library.lti.com/maven2/lib</url>
+5. </repository>
+6. </repositories>
+
+
+When we run MAVEN project then MAVEN will search for the dependencies in the following order.
+
+1) First, MAVEN will search for the dependencies in local repository, if the required
+dependencies are available at Local Repository the MAVEN will use them in application. If
+the dependencies are not available at Local Repository then MAVEN search for them at
+Central Repository.
+
+2) If the required Dependencies are existed in central repository then MAVEN will load them
+into Local Repository and MAVEN will use them in the applications. If the required
+dependencies are not existed in Central Repository then MAVEN will search for them in
+Remote Repositories as per configuration.
+
+3) If Remote Repository is not configured then MAVEN will stop the application execution and
+generated some Exceptions.
+
+4) If Remote Repository is configured then MAVEN will search for the required dependencies
+in Remote Repository, if they are identified then MAVEN will load them into Local
+Repository for futur reference. If the dependencies are not existed at Remote Repositories
+then MAVEN will stop the execution and generate some Exceptions.
+
+
+Dependency Management:
+=======================
+In Applications, Dependencies are the libraries[Collection of JARs] which are required to compile,
+test and run our applications.
+In General, in application development, we will download the required libraries from internet and
+we will store them in application directory structer.
+The main Advantage of MAVEN in applications development is that not to store any Dependent
+JAR files in Project Directory Structer by downloading them explicitly, MAVEN has given flexibility
+to the developers like to specify dependent JAR files names in pom file, where MAVEN will search
+for them in the repositories and MAVEN will load them into the project directory structer
+automatically.
+
+If we need any Library in MAVEN based applications then we have to declare them in pom file like
+below.
+1. <dependencies>
+2. <dependency>
+3. <groupId>org.hibernate</groupId>
+4. <artifactId>hibernate-core</artifactId>
+5. <version>3.5.6-Final</version>
+6. <scope>provided</scope>
+7. </dependency>
+8. </dependencies>
+
+If we provide the dependency like above then MAVEN will search for the hibernate library with the
+name like
+http://repo1.maven.org/maven2/org/hibernate/hibernate-core/3.5.6-Final/
+MAVEN is following "Transitive Dependencies Mechanism", that is, if our dependencies are
+required any other libraries then MAVEN will get them automatically without loading them explicitly
+by the developers.
+
+Dependency Scopes:
+-----------------
+In Applications, some dependencies are required to all phases of the project lifecycle like compile,
+test, run,... and some other required only some of phases of the project lifecycle.
+In order to limit the dependencies for the lifecycle phases we will use Dependency Scopes.
+There are 6 scopes available in MAVEN
+1. Compile
+2. Provided
+3. Runtime
+4. Test
+5. System
+6. Import
+
+1. Compile:
+It is the default scope in MAVEN . This scope will make the dependencies to avail all phases like
+compile, test, run,....
+EX:
+1. <dependency>
+2. <groupId>org.hibernate</groupId>
+3. <artifactId>hibernate-core</artifactId>
+4. <version>3.5.6-Final</version>
+5. <scope>compile</scope>
+6. </dependency>
+
+Note: In general, hibernate-core library is required for all phases of the application.
+
+2. Provided:
+
+This scope will make the dependency libraries to avail upto compilation and and upto testinbg, not
+for runtime, because, at runtime, JDKs or Containers will provide the required dependencies at
+runtime.
+
+EX:
+In web applications, Servlet API is required expliclty to compile and test the project, but, Servlet
+ API is provided by the container at runtime automatically, so that, they are not required to be
+exported at runtime.
+
+1. <dependency>
+2. <groupId> javax.servlet</groupId>
+3. <artifactId>servlet-api</artifactId>
+4. <version>3.0.1</version>
+5. <scope>provided</scope>
+6. </dependency>
+
+3. Runtime:
+
+This scope indicates that the dependency is not required for compilation, but is for execution. It is
+in the runtime and test class paths, but not the compile class path.
+EX:
+1. <dependency>
+2. <groupId>com.thoughtworks.xstream</groupId>
+3. <artifactId>xstream</artifactId>
+4. <version>1.4.4</version>
+5. <scope>runtime</scope>
+6. </dependency>
+
+4. Test:
+This scope indicates that the dependency is not required for normal use of the application, and is
+only available for the test compilation and execution phases. This scope is not transitive.
+EX:
+1. <dependency>
+2. <groupId> junit</groupId>
+3. <artifactId> junit</artifactId>
+4. <version>4.12</version>
+5. <scope>test</scope>
+6. </dependency>
+
+
+5. System:
+Dependencies with system are similar to ones with scope provided. The only difference is system
+dependencies are not retrieved from remote repository. They are present under project’s
+subdirectory and are referred from there.
+EX:
+1. <dependency>
+2. <groupId>Explicit_Dependency</groupId>
+3. <artifactId>Explicit_Dependency</artifactId>
+4. <scope>system</scope>
+5. <version>1.0</version>
+6. <systemPath>apps\app.war\WEB-INF\lib\Explicit_Dependency.jar </systemPath>
+7. </dependency>
+
+6. Import:
+-----------
+It is available in Maven 2.0.9 or later.
+Import scope is only supported on a dependency of type pom in the dependencyManagement
+section. It indicates the dependency to be replaced with the effective list of dependencies in the
+specified POM’s dependencyManagement section.
+
+EX:
+1. <dependencyManagement>
+2. <dependencies>
+3. <dependency>
+<groupId>other.pom.group.id</groupId>
+5. <artifactId>other-pom-artifact-id</artifactId>
+6. <version>SNAPSHOT</version>
+7. <scope>import</scope>
+8. <type>pom</type>
+9. </dependency>
+10. </dependencies>
+11.</dependencyManagement>
+
+
+Project Inheritance:
+======================
+In MAVEN based applications, it is possible to inherit configurations from one pom file to another
+pom file inorder to avoid configurations redundency.
+
+To declare parent pom , we have to use "pom" as value to <packaging> tag in parent pom file.
+EX:
+1. <project ... >
+2. <modelVersion>4.0.0</modelVersion>
+3. <groupId>com.lti</groupId>
+4. <artifactId>my-parent</artifactId>
+5. <version>0.0.1-SNAPSHOT</version>
+6. <packaging>pom</packaging>
+7. ---
+8. </project>
+
+If we want to inherit parent pom configuration details into a particular chaild pom then we have to
+configure parent pom in chaild pom.
+EX:
+1. <project  ..... >
+2. -----
+3. <parent>
+4. <groupId>com.lti</groupId>
+5. <artifactId>my-parent</artifactId>
+6. <version>0.0.1-SNAPSHOT</version>
+7. </parent>
+8. ------
+9. </project>
+
+Note: In JAVA, java.lang.Object class is common and default super class for every java class
+
+inorder to provide 11 common and default methods to each and every java class, similarily , there
+is a common and default super pom file is existed in maven inorder to provide all common
+configurations and settings to the chaild pom file.
+
+In general, parent pom contains the following configurations
+1. Common data – Developers’ names, SCM address, distribution management etc.
+2. Constants – Such as version numbers
+3. Common dependencies – Common to all child. It has same effect as writing them several
+times in individual pom files.
+4. Properties – For example plugins, declarations, executions and IDs.
+5. Configurations
+6. Resources
+
+Note: By default, Maven looks for the parent POM first at project’s root, then the local repository,
+and lastly in the remote repository. If parent POM file is not located in any other place, then you
+can use code tag. This relative path shall be relative to project root.
+
+EX:
+1. <parent>
+2. <groupId>com.lti</groupId>
+3. <artifactId>MavenExamples</artifactId>
+4. <version>0.0.1-SNAPSHOT</version>
+5. <relativePath>../baseapp/pom.xml</relativePath>
+6. </parent>
+
+Note: If we want to get super pom from MAVEN then use the following command on command
+prompt from the project root location which contains project specific pom file.
+
+mvn help:effective-pom
+
+Note: Where effective-pm is super pom configurations and project configurations.
+
+Build Configuration:
+====================
+In MAVEN , Build Configuration is mainly for plugin configurations, resources
+configurations,.....which are required in MAVEN Project.
+
+MAVEN is simply the collection of plugins, where plugins are used to perfor m the actions like
+creating jar files, creating war files, compile Source code, executing unit test code, create project
+documentation, ......
+
+MAVEN is having "Plugin Execution Framework" at its heart inorder to execute all plugins.
+
+In MAVEN , there are two types of Plugins.
+1. Build Plugins
+2. Reporting Plugins
+
+1.Build Plugins: These plugins are executed during the build and they should be configured in
+the <build/> element from the POM.
+
+EX
+1.Clean : It is used when you want to remove files generated at build-time in a
+project's directory.
+2.Compiler: Compiles Java source code.
+3.Deploy: It can be used to store artifacts in remote repository while deploying the
+applications in order to share to other projects .
+4.Install: It can be used to install artifacts into local repository.
+5.Resources: It will include all the project resources in output directory while creating
+JAR files.
+6.Ear: create ear file from the current project.
+7.jar: creates jar file from the current project.
+8.war: creates war file from the current project.
+9.rar: creates rar file from the current project.
+
+2. Reporting plugins: These plugins are executed during the site generation and they should be
+configured in the <reporting/> element from the POM.
+
+EX:
+1.changelog: Generate a list of recent changes from your SCM[Software Configuration
+Management].
+2.changes: Generate a report from an issue tracker or a change document.
+3.javadoc: Generate Javadoc for the project.
+4.project-info-resports: Generate standard project reports.
+5.surfire-report: Generate a report based on the results of unit tests.
+
+IN general, we will use MAVEN compiler plugin inorder to perform Compilation, for this we have to
+use the following xml tags in pom.xml file.
+1. <project ---- >
+2. <build>
+3. <plugins>
+4. <plugin>
+5. <groupId>org.apache.maven.plugins</groupId>
+6. <artifactId>maven-compiler-plugin</artifactId>
+7. <configuration>
+8. <source>1.8</source>
+9. <target>1.8</target>
+10. </configuration>
+11. </plugin>
+12. </plugins>
+13. </build>
+14.</project>
+
+
+By default, all files placed in "src\main\config" are packaged into the generated project artifact and
+any file which we placed in "src\test\resources" are available in project classpath during unit tests.
+If we want to provide our own customized resources location in project then we have to configure
+them in pom.xml file under <build> tag like below.
+
+1. <build>
+2. ----
+3. <resources>
+4. <resource>
+5. <directory>src/main/config</directory</directory>
+6. </resource>
+7. <resource>
+8. <directory>src/main/resources</directory</directory>
+9. </resource>
+10. ----
+11. </resources>
+12. ----
+13.</build>
+
+Build Profiles:
+=================
+IN general, profiles are used to customize the build lifecycle for different environments like
+development, testing, production,.....
+
+Example:
+1. <profiles>
+2. <profile>
+3. <id>development</id>
+4. <activation>
+5. <activeByDefault>true</activeByDefault>
+6. </activation>
+7. <properties>
+8. <jdbc.connection.url> jdbc:oracle:thin:@localhost:1521:xe</jdbc.connection.url>
+9. </properties>
+10. </profile>
+11. <profile>
+12. <id>test</id>
+13. <properties>
+14. <jdbc.connection.url> jdbc:mysql://localhost:3306/testdb</jdbc.connection.url>
+15. </properties>
+16. </profile>
+17.</profiles>
+
+Where each and every profile has its own id, it can be used to access the respective environment
+or profile.
+
+In src/main/resources/db.properties
+
+jdbc.connection.url = ${jdbc.connection.url}
+
+If we provide the above setups like above then at compilation time, the respective jdbc URL will be
+injected to the "jdbc.connection.url" property depending on the target environment.
+Use the following command on command prompt inorder to compile the project.
+
+C:/apps>mvn compile
+Here "jdbc.connection.profile" property will take "jdbc:oracle:thin:@localhost:1521:xe" value.
+
+C:/apps>mvn compile -Ptest
+Here "jdbc.connection.profile" property will take "jdbc:mysql://localhost:3306/test" value.
+ jdbc.connection.url = ${jdbc.connection.url}
+If we provide the above setups like above then at compilation time, the respective jdbc URL will be
+injected to the "jdbc.connection.url" property depending on the target environment.
+Use the following command on command prompt inorder to compile the project.
+C:/apps>mvn compile
+Here "jdbc.connection.profile" property will take "jdbc:oracle:thin:@localhost:1521:xe" value.
+C:/apps>mvn compile -Ptest
+Here "jdbc.connection.profile" property will take "jdbc:mysql://localhost:3306/test" value.
